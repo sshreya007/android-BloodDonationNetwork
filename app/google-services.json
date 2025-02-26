@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "240017165327",
+    "project_id": "blooddonationnetwork-190fc",
+    "storage_bucket": "blooddonationnetwork-190fc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240017165327:android:d9b9df4843147b095e277a",
+        "android_client_info": {
+          "package_name": "com.example.blood_donation_network"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTO4io7I7dgOac0uY7arZ8jl_rIvuaqrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240017165327:android:6caf6c78860fc6875e277a",
+        "android_client_info": {
+          "package_name": "com.example.blooddonationactivity"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTO4io7I7dgOac0uY7arZ8jl_rIvuaqrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
