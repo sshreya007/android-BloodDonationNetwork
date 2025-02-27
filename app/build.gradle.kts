@@ -52,4 +52,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("com.cloudinary:cloudinary-android:2.1.0")
     implementation("com.squareup.picasso:picasso:2.8")
+
 }

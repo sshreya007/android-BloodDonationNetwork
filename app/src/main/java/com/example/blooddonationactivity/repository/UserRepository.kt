@@ -1,6 +1,6 @@
 package com.example.blooddonationactivity.repository
 
-import com.example.blooddonationactivity.UserModel
+import com.example.blooddonationactivity.model.UserModel
 import com.google.firebase.auth.FirebaseUser
 
 interface UserRepository {

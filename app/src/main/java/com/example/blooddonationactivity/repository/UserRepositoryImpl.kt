@@ -27,7 +27,7 @@ class UserRepositoryImpl : UserRepository { // Correct implementation of UserRep
                     val userId = auth.currentUser?.uid ?: ""
                     // Create the user model with the necessary fields
                     val userModel = UserModel(email, username, bloodType, password)
-                    addUserToDatabase(userId,UserModel, callback)
+                    addUserToDatabase(userId,userModel, callback)
                 } else {
                     callback(false, task.exception?.message ?: "Sign up failed")
                 }
@@ -48,7 +48,7 @@ class UserRepositoryImpl : UserRepository { // Correct implementation of UserRep
 
     override fun addUserToDatabase(
         userId: String,
-        userModel: com.example.blooddonationactivity.UserModel,
+        userModel : UserModel,
         callback: (Boolean, String) -> Unit
     ) {db.collection("users").document(userId)
         .set(userModel)
@@ -70,7 +70,7 @@ class UserRepositoryImpl : UserRepository { // Correct implementation of UserRep
 
     override fun getUserFromDatabase(
         userId: String,
-        callback: (com.example.blooddonationactivity.UserModel?, Boolean, String) -> Unit
+        callback: (UserModel?, Boolean, String) -> Unit
     ) {
         db.collection("users").document(userId).get()
             .addOnCompleteListener { task ->
