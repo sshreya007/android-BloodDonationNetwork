@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.EventsActivity">
+    tools:context=".ui.activity.EventsActivity"
+    android:background="@drawable/events">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
