@@ -12,11 +12,12 @@
         android:id="@+id/buttonRequest"
         android:layout_width="85dp"
         android:layout_height="64dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="286dp"
+        android:layout_marginBottom="72dp"
         android:background="@color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/buttonEvent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.11"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
