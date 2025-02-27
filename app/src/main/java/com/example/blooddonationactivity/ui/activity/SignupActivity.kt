@@ -17,7 +17,7 @@ class SignupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Initialize ViewBinding
+
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
