@@ -12,12 +12,16 @@
         android:id="@+id/textView"
         android:layout_width="359dp"
         android:layout_height="155dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginEnd="24dp"
         android:hint="Enter your request here..."
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.548" />
+        app:layout_constraintVertical_bias="0.539" />
 
     <Button
         android:id="@+id/buttonRequestBlood"
@@ -26,7 +30,8 @@
         android:layout_marginStart="156dp"
         android:layout_marginTop="104dp"
         android:layout_marginEnd="164dp"
-        android:background="@color/red"
+
+        android:backgroundTint="@color/red"
         android:text="Send Request"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
