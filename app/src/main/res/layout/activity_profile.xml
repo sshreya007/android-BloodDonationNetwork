@@ -5,21 +5,26 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.ProfileActivity">
+    tools:context=".ui.activity.ProfileActivity"
+    android:background="@drawable/profile">
 
     <Button
         android:id="@+id/btnlogout"
-        android:layout_width="255dp"
-        android:layout_height="86dp"
+        android:layout_width="241dp"
+        android:layout_height="69dp"
         android:text="Logout"
-        tools:layout_editor_absoluteX="68dp"
-        tools:layout_editor_absoluteY="215dp" />
+        android:textSize="30dp"
+        android:backgroundTint="@color/red"
+        tools:layout_editor_absoluteX="92dp"
+        tools:layout_editor_absoluteY="408dp" />
 
     <Button
         android:id="@+id/btneditprofile"
         android:layout_width="242dp"
-        android:layout_height="83dp"
+        android:layout_height="68dp"
         android:text="Edit Profile"
-        tools:layout_editor_absoluteX="81dp"
-        tools:layout_editor_absoluteY="335dp" />
+        android:textSize="30dp"
+        android:backgroundTint="@color/red"
+        tools:layout_editor_absoluteX="98dp"
+        tools:layout_editor_absoluteY="508dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
