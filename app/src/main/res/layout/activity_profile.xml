@@ -7,4 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.ProfileActivity">
 
+    <Button
+        android:id="@+id/btnlogout"
+        android:layout_width="255dp"
+        android:layout_height="86dp"
+        android:text="Logout"
+        tools:layout_editor_absoluteX="68dp"
+        tools:layout_editor_absoluteY="215dp" />
+
+    <Button
+        android:id="@+id/btneditprofile"
+        android:layout_width="242dp"
+        android:layout_height="83dp"
+        android:text="Edit Profile"
+        tools:layout_editor_absoluteX="81dp"
+        tools:layout_editor_absoluteY="335dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
