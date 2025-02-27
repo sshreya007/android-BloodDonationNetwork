@@ -7,31 +7,28 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.blooddonationactivity.R
+import com.example.blooddonationactivity.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var emailEditText: EditText
-    private lateinit var passwordEditText: EditText
-    private lateinit var loginButton: Button
+    private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
-        // Bind UI components
-        emailEditText = findViewById(R.id.Email)
-        passwordEditText = findViewById(R.id.passwordl)
-        loginButton = findViewById(R.id.buttonlogin)
+        // Initialize View Binding
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Initialize FirebaseAuth
         auth = FirebaseAuth.getInstance()
 
         // Handle login button click
-        loginButton.setOnClickListener {
-            val email = emailEditText.text.toString().trim()
-            val password = passwordEditText.text.toString().trim()
+        binding.buttonlogin.setOnClickListener {
+            val email = binding.Email.text.toString().trim()
+            val password = binding.passwordl.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
@@ -49,7 +46,11 @@ class LoginActivity : AppCompatActivity() {
                             finish()
                         } else {
                             // If sign-in fails, display a message
-                            Toast.makeText(this, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                "Authentication failed: ${task.exception?.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
             }
