@@ -11,8 +11,11 @@ activity = "1.10.0"
 constraintlayout = "2.2.0"
 firebaseAuthKtx = "23.2.0"
 firebaseFirestoreKtx = "25.1.2"
+coroutines = "1.6.4"
 
 [libraries]
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

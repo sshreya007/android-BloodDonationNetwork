@@ -10,7 +10,7 @@ import com.example.blooddonationactivity.R
 import com.example.blooddonationactivity.databinding.ActivityWelcomeBinding
 
 class WelcomeActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityWelcomeBinding
+    lateinit var binding: ActivityWelcomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
