@@ -2,18 +2,18 @@ package com.example.blooddonationactivity.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.blooddonationactivity.R
 import com.example.blooddonationactivity.databinding.ActivityLoginBinding
-import com.google.firebase.auth.FirebaseAuth
+import com.example.blooddonationactivity.viewmodel.UserViewModel
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var auth: FirebaseAuth
+    private val viewModel: UserViewModel by viewModels() // Use viewModels delegate to get the ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +22,23 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize FirebaseAuth
-        auth = FirebaseAuth.getInstance()
+        // Observe login status
+        viewModel.loginStatus.observe(this, Observer { resource ->
+            when (resource) {
+                is UserViewModel.Resource.Loading -> {
+                    // Optionally show a loading indicator
+                }
+                is UserViewModel.Resource.Success -> {
+                    Toast.makeText(this, resource.data, Toast.LENGTH_SHORT).show()
+                    // Navigate to HomeActivity
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                }
+                is UserViewModel.Resource.Error -> {
+                    Toast.makeText(this, resource.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
 
         // Handle login button click
         binding.buttonlogin.setOnClickListener {
@@ -33,26 +48,7 @@ class LoginActivity : AppCompatActivity() {
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
             } else {
-                // Perform Firebase login
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // Login successful
-                            Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-
-                            // Navigate to HomeActivity
-                            val intent = Intent(this, HomeActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            // If sign-in fails, display a message
-                            Toast.makeText(
-                                this,
-                                "Authentication failed: ${task.exception?.message}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
+                viewModel.login(email, password) // Call the login method in ViewModel
             }
         }
     }
