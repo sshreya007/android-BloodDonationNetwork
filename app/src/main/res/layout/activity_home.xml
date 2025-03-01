@@ -60,7 +60,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="59dp"
         android:layout_marginTop="18dp"
+        android:layout_marginBottom="35dp"
         android:text="Request "
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/buttonEvent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonRequest" />
     <TextView
@@ -70,6 +73,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="12dp"
         android:text="Events"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonEvent" />
 
@@ -80,6 +84,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:text="BloodBankContacts"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonBloodStock" />
 
