@@ -1,20 +1,18 @@
 package com.example.blooddonationactivity.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.blooddonationactivity.R
 import com.example.blooddonationactivity.databinding.ActivitySignupBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.blooddonationactivity.viewmodel.UserViewModel
 
 class SignupActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignupBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var firestore: FirebaseFirestore
+    private val viewModel: UserViewModel by viewModels() // Use viewModels delegate to get the ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,13 +20,26 @@ class SignupActivity : AppCompatActivity() {
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize FirebaseAuth and Firestore
-        auth = FirebaseAuth.getInstance()
-        firestore = FirebaseFirestore.getInstance()
+        // Observe signup status
+        viewModel.signupStatus.observe(this, Observer { resource ->
+            when (resource) {
+                is UserViewModel.Resource.Loading -> {
+                    // Optionally show a loading indicator
+                }
+                is UserViewModel.Resource.Success -> {
+                    Toast.makeText(this, resource.data, Toast.LENGTH_SHORT).show()
+                    // Navigate to LoginActivity or HomeActivity
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finish()
+                }
+                is UserViewModel.Resource.Error -> {
+                    Toast.makeText(this, resource.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
 
         // Set a click listener for the signup button
         binding.signupButton.setOnClickListener {
-
             val username = binding.signupUsername.text.toString().trim()
             val bloodType = binding.signupBloodType.text.toString().trim()
             val email = binding.signupEmail.text.toString().trim()
@@ -38,26 +49,8 @@ class SignupActivity : AppCompatActivity() {
             if (username.isEmpty() || bloodType.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             } else {
-                // Log the email and password for debugging
-                Log.d("SignupActivity", "Email: $email, Password: $password")
-
-                // Create a new user with Firebase Authentication
-                auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // User created successfully
-                            val user = auth.currentUser
-
-                            // Optionally store additional user info in Firestore
-                            val userData = hashMapOf(
-                                "username" to username,
-                                "bloodType" to bloodType
-                            )
-                        }
-                    }
+                viewModel.signup(email, password, username, bloodType) // Call the signup method in ViewModel
             }
         }
     }
 }
-
-// Store user
