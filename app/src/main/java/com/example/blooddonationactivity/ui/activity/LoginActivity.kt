@@ -2,6 +2,7 @@ package com.example.blooddonationactivity.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -36,7 +37,11 @@ class LoginActivity : AppCompatActivity() {
 
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
+
+
             } else {
+                binding.displayLoginResult.text="login failed"
+                binding.displayLoginResult.visibility= View.GONE
                 userViewModel.login(email, password){
                     success,message->
                     if(success){
