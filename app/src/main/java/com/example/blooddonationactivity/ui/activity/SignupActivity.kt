@@ -8,12 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.blooddonationactivity.R
 import com.example.blooddonationactivity.databinding.ActivitySignupBinding
+import com.example.blooddonationactivity.repository.UserRepositoryImpl
 import com.example.blooddonationactivity.viewmodel.UserViewModel
 
 class SignupActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignupBinding
-    private val viewModel: UserViewModel by viewModels() // Use viewModels delegate to get the ViewModel
+    lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,23 +22,8 @@ class SignupActivity : AppCompatActivity() {
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Observe signup status
-        viewModel.signupStatus.observe(this, Observer { resource ->
-            when (resource) {
-                is UserViewModel.Resource.Loading -> {
-                    // Optionally show a loading indicator
-                }
-                is UserViewModel.Resource.Success -> {
-                    Toast.makeText(this, resource.data, Toast.LENGTH_SHORT).show()
-                    // Navigate to LoginActivity or HomeActivity
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
-                }
-                is UserViewModel.Resource.Error -> {
-                    Toast.makeText(this, resource.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
+        userViewModel = UserViewModel(UserRepositoryImpl())
+
 
         // Set a click listener for the signup button
         binding.signupButton.setOnClickListener {
@@ -50,7 +36,16 @@ class SignupActivity : AppCompatActivity() {
             if (username.isEmpty() || bloodType.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             } else {
-                viewModel.signup(email, password, username, bloodType) // Call the signup method in ViewModel
+                userViewModel.signup(email, password, username, bloodType){
+                    success,message->
+                    if(success){
+                        Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT).show()
+                        finish()
+
+                    }else{
+                        Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT).show()
+                    }
+                } // Call the signup method in ViewModel
             }
         }
     }

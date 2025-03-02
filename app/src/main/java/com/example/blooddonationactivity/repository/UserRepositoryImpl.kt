@@ -1,12 +1,14 @@
 package com.example.blooddonationactivity.repository
 
 import com.example.blooddonationactivity.model.UserModel
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UserRepositoryImpl : UserRepository { // Correct implementation of UserRepository interface
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
+    var auth = FirebaseAuth.getInstance()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     override fun login(email: String, password: String, callback: (Boolean, String) -> Unit) {
@@ -26,7 +28,7 @@ class UserRepositoryImpl : UserRepository { // Correct implementation of UserRep
                 if (task.isSuccessful) {
                     val userId = auth.currentUser?.uid ?: ""
                     // Create the user model with the necessary fields
-                    val userModel = UserModel(email, username, bloodType, password)
+                    val userModel = UserModel(email, username, bloodType)
                     addUserToDatabase(userId,userModel, callback)
                 } else {
                     callback(false, task.exception?.message ?: "Sign up failed")

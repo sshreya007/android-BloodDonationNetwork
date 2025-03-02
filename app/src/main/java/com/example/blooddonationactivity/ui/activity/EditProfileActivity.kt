@@ -6,12 +6,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.blooddonationactivity.R
 import com.example.blooddonationactivity.databinding.ActivityEditProfileBinding
+import com.example.blooddonationactivity.repository.UserRepositoryImpl
 import com.example.blooddonationactivity.viewmodel.UserViewModel
 
 class EditProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditProfileBinding
-    private val viewModel: UserViewModel by viewModels()
+    lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +21,8 @@ class EditProfileActivity : AppCompatActivity() {
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        userViewModel = UserViewModel(UserRepositoryImpl())
         // Set click listener for save changes button
         binding.btnSaveChanges.setOnClickListener {
             val newPassword = binding.editTextNewPassword.text.toString().trim()
@@ -37,7 +40,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun updatePassword(newPassword: String) {
-        viewModel.getCurrentUser ()?.let { user ->
+        userViewModel.getCurrentUser ()?.let { user ->
             user.updatePassword(newPassword).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Password updated successfully", Toast.LENGTH_SHORT).show()

@@ -8,12 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.blooddonationactivity.R
 import com.example.blooddonationactivity.databinding.ActivityLoginBinding
+import com.example.blooddonationactivity.repository.UserRepositoryImpl
 import com.example.blooddonationactivity.viewmodel.UserViewModel
+import com.google.firebase.FirebaseApp
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private val viewModel: UserViewModel by viewModels() // Use viewModels delegate to get the ViewModel
+
+    lateinit var userViewModel: UserViewModel
+    // Use viewModels delegate to get the ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,23 +26,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Observe login status
-        viewModel.loginStatus.observe(this, Observer { resource ->
-            when (resource) {
-                is UserViewModel.Resource.Loading -> {
-                    // Optionally show a loading indicator
-                }
-                is UserViewModel.Resource.Success -> {
-                    Toast.makeText(this, resource.data, Toast.LENGTH_SHORT).show()
-                    // Navigate to HomeActivity
-                    startActivity(Intent(this, HomeActivity::class.java))
-                    finish()
-                }
-                is UserViewModel.Resource.Error -> {
-                    Toast.makeText(this, resource.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
+
+        userViewModel = UserViewModel(UserRepositoryImpl())
 
         // Handle login button click
         binding.buttonlogin.setOnClickListener {
@@ -48,7 +37,15 @@ class LoginActivity : AppCompatActivity() {
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
             } else {
-                viewModel.login(email, password) // Call the login method in ViewModel
+                userViewModel.login(email, password){
+                    success,message->
+                    if(success){
+                        val intent = Intent(this@LoginActivity,HomeActivity::class.java)
+                        startActivity(intent)
+                    }else{
+                        Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT).show()
+                    }
+                } // Call the login method in ViewModel
             }
         }
     }
